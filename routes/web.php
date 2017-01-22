@@ -11,8 +11,10 @@
 |
 */
 
+//home routes
 Route::get('/', 'HomeController@index');
+Route::get('/home', 'HomeController@index');
 
+//Auth management
 Auth::routes();
 
-Route::get('/home', 'HomeController@index');
