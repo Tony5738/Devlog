@@ -44,9 +44,9 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="nav navbar-nav">
                         <li><a href="{{ url('/home') }}">Home</a></li>
-                        <li><a href="{{ url('/about') }}">About</a></li>
+                        {{--<li><a href="{{ url('/about') }}">About</a></li>--}}
                         <li><a href="{{ url('/blog') }}">Blog</a></li>
-                        <li><a href="{{ url('/contact') }}">Contact</a></li>
+                        {{--<li><a href="{{ url('/contact') }}">Contact</a></li>--}}
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -54,8 +54,8 @@
                         <!-- Authentication Links -->
                         @if (Auth::guest())
 
-                            {{--<li><a href="{{ url('/login') }}">Login</a></li>
-                            <li><a href="{{ url('/register') }}">Register</a></li>--}}
+                            <li><a href="{{ url('/login') }}">Login</a></li>
+                            {{--<li><a href="{{ url('/register') }}">Register</a></li>--}}
                         @else
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -63,8 +63,13 @@
                                 </a>
 
                                 <ul class="dropdown-menu" role="menu">
-                                    <!--todo Handle the policy with the guests-->
-                                    <li><a href="{{ url('/register') }}">Register an guest</a></li>
+
+                                    <li><a href="{{ url('/user/'.Auth::user()->id) }}">Profile</a></li>
+                                    @if(Auth::user()->isAdmin())
+                                        <li><a href="{{ url('/register') }}">Register an guest</a></li>
+                                        <li><a href="{{ url('/user') }}">Guest administration</a></li>
+                                    @endif
+
                                     <li>
                                         <a href="{{ url('/logout') }}"
                                             onclick="event.preventDefault();
@@ -94,17 +99,22 @@
         </header>
 
         <section class="container">
-            @yield('section_title')
-            @yield('section_content')
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">@yield('section_title')</div>
+                            <div class="panel-body">
+                                @yield('content')
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </section>
 
-        <article>
-            @yield('article_title')
-            @yield('article_content')
-        </article>
-
-        <footer>
-            <div>
+        <footer class="jumbotron fixed-height">
+            <div class="container">
                 <p>Anthony Bruhl</p>
             </div>
         </footer>

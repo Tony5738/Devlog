@@ -20,17 +20,13 @@
     </div>
 @endsection
 
-@section('section_content')
-    IMaR Technology Gateway summary/introduction
+@section('content')
+    <article>
+        IMaR Technology Gateway summary/introduction
+    </article>
 @endsection
 
-@section('article_title')
-    What know about IMaR?
-@endsection
 
-@section('article_content')
-    Blablabla...
-@endsection
 
 
 

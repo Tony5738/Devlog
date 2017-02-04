@@ -19,14 +19,21 @@ class RolesTableSeeder extends Seeder
     {
         DB::table('roles')->delete();
 
-        for($i = 0;$i<2;++$i)
-        {
-            $date = $this->randDate();
-            DB::table('roles')->insert([
-                'name' => 'Role'.$i,
-                'created_at' =>$date,
-                'updated_at' => $date
-            ]);
-        }
+
+
+        $date = $this->randDate();
+        DB::table('roles')->insert([
+            'name' => 'admin',
+            'created_at' =>$date,
+            'updated_at' => $date
+        ]);
+
+        $date = $this->randDate();
+        DB::table('roles')->insert([
+            'name' => 'guest',
+            'created_at' =>$date,
+            'updated_at' => $date
+        ]);
+
     }
 }

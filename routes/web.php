@@ -17,4 +17,11 @@ Route::get('/home', 'HomeController@index');
 
 //Auth management
 Auth::routes();
+//User management
+Route::resource('user','UserController');
 
+//Post management
+Route::resource('post','PostController');
+
+//Tag research route
+Route::get('post/tag/{tag}', 'PostController@indexTag');
