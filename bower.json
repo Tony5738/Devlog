@@ -1,0 +1,18 @@
+{
+  "name": "Devlog",
+  "license": "MIT",
+  "homepage": "https://github.com/Tony5738/Devlog",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "resources/assets/vendor",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^3.3.7",
+    "jquery-ui": "^1.12.1"
+  }
+}
