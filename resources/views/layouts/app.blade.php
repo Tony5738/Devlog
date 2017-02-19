@@ -98,20 +98,7 @@
             </div>
         </header>
 
-        <section class="container">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-8 col-md-offset-2">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">@yield('section_title')</div>
-                            <div class="panel-body">
-                                @yield('content')
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+        @yield('content')
 
         <footer class="jumbotron fixed-height">
             <div class="container">
@@ -123,5 +110,6 @@
 
     <!-- Scripts -->
     <script src="/js/app.js"></script>
+    @yield('script')
 </body>
 </html>
