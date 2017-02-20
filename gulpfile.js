@@ -40,6 +40,7 @@ elixir(function(mix){
         '../../assets/' + paths.bootstrap + '/css/bootstrap.css',
         '../../assets/' + paths.bootstrap + '/css/bootstrap-theme.css',
         '../../assets/' + paths.jquery_ui + '/themes/base/jquery-ui.css',
+        'blog.css'
     ], 'public/css/app.css');
 
     //Merge app scripts

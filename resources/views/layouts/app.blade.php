@@ -45,7 +45,7 @@
                     <ul class="nav navbar-nav">
                         <li><a href="{{ url('/home') }}">Home</a></li>
                         {{--<li><a href="{{ url('/about') }}">About</a></li>--}}
-                        <li><a href="{{ url('/blog') }}">Blog</a></li>
+                        <li><a href="{{ url('/post') }}">Blog</a></li>
                         {{--<li><a href="{{ url('/contact') }}">Contact</a></li>--}}
                     </ul>
 
