@@ -17,6 +17,11 @@
             <div class="row alert alert-info">{{ $info }}</div>
         @endif
 
+        @if(Session::get('message'))
+            <div class="row alert alert-info">{{ Session::get('message') }}</div>
+        @endif
+
+
         @if(Auth::check() and Auth::user()->isAdmin())
                 @include('posts.add');
         @endif

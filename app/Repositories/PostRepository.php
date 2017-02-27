@@ -20,15 +20,9 @@ class PostRepository extends ResourceRepository
             ->orderBy('posts.created_at', 'desc');
     }
 
-    private function queryPostWithUserAndTags($id)
-    {
-        return $this->model->with('user','tags')
-            ->where('id',$id )->first();
-    }
-
     public function getPostByIdWithUserAndTags($id)
     {
-        return $this->queryPostWithUserAndTags($id);
+        return $this->queryPostsWithUserAndTags()->where('id', $id)->first();
     }
 
     public function getPostsWithUserAndTagsPaginate($n)
@@ -46,10 +40,5 @@ class PostRepository extends ResourceRepository
     }
 
 
-    public function destroy($id)
-    {
-        $post =  $this->model->findOrFail($id);
-        $post->tags()->detach();
-        $post->delete();
-    }
+
 }

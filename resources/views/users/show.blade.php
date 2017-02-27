@@ -15,7 +15,7 @@
             <div class="row">
                 <div class="col-md-8 col-md-offset-2">
                     <div class="panel panel-default">
-                        <div class="panel-heading"Profile</div>
+                        <div class="panel-heading">Profile</div>
                         <div class="panel-body">
                             <article>
                                 <br>
@@ -27,9 +27,9 @@
 
                                 <!-- todo add a button for modify his own profile-->
                                 {{--@if(Auth::check() and Auth::user()->id ==  or )
-                                    <a href="javascript:history.back()" class="btn btn-primary">
-                                         Modify your profile
-                                    </a>
+                                     <a href="javascript:history.back()" class="btn btn-primary">
+                                          Modify your profile
+                                      </a>
                                 @endif--}}
 
                                 <!-- todo resolve the arrows not loaded-->
@@ -43,4 +43,5 @@
             </div>
         </div>
     </section>
+
 @endsection

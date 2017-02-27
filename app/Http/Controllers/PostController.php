@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\PostRequest;
+use App\Post;
 use App\Repositories\TagRepository;
 use Illuminate\Http\Request;
 use App\Repositories\PostRepository;
@@ -43,15 +45,15 @@ class PostController extends Controller
      * @param TagRepository $tagRepository
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, TagRepository $tagRepository)
+    public function store(PostRequest $request, TagRepository $tagRepository)
     {
         $inputs = array_merge($request->all(),['user_id'=>$request->user()->id]);
         $post = $this->postRepository->store($inputs);
         if(isset($inputs['tags']))
         {
-            $tagRepository->storeOnPost($post,$inputs['tags']);
+            $tagRepository->storeTagsOnPost($post,$inputs['tags']);
         }
-        return redirect(route('post.index'));
+        return redirect(route('post.index'))->with('message','Post created');
     }
 
     /**
@@ -64,8 +66,6 @@ class PostController extends Controller
     {
         $post = $this->postRepository->getPostByIdWithUserAndTags($id);
 
-
-
         return view('posts.show', compact('post'));
     }
 
@@ -77,33 +77,57 @@ class PostController extends Controller
      */
     public function edit($id)
     {
+        //todo policy can't edit if you are not the owner
         $post = $this->postRepository->getPostByIdWithUserAndTags($id);
 
-        return view('posts.edit', compact('post'));
+        if(!$post->tags()->get()->isEmpty())
+        {
+            $tagString = $post->tags->first()->tag;
+            for ($i = 1;$i<$post->tags->count();$i++){
+                $tagString .= ','.$post->tags[$i]->tag;
+            }
+        }
+        return view('posts.edit', compact('post','tagString'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param PostRequest|Request $request
+     * @param TagRepository $tagRepository
+     * @param $post
      * @return \Illuminate\Http\Response
+     * @internal param int $id
      */
-    public function update(Request $request, $id)
+    public function update(PostRequest $request, TagRepository $tagRepository, Post $post)
     {
-
+        //todo policy can't update if you are not the owner
+        $inputs = array_merge($request->all());
+        $this->postRepository->update($post->id ,$inputs);
+        if(isset($inputs['tags']))
+        {
+            $tagRepository->updateTagsOnPost($post,$inputs['tags']);
+        }
+        return redirect(route('post.index'))->with('message','Post updated');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param TagRepository $tagRepository
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(TagRepository $tagRepository,$id)
     {
+        //todo policy can't delete if you are not the owner
+        $post =  $this->postRepository->getById($id);
+        if(!$post->tags()->get()->isEmpty())
+        {
+            $tagRepository->deleteTagsOnPost($post);
+        }
         $this->postRepository->destroy($id);
-        return redirect()->back();
+        return redirect()->back()->with('message','Post deleted');
     }
 
     public function indexTag($tag)
