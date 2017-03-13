@@ -13,7 +13,7 @@ class Post extends Model
      * @var array
      */
     protected $fillable = [
-        'title', 'content', 'user_id',
+        'post_title', 'post_content', 'user_id',
     ];
 
     public function user()
@@ -24,5 +24,10 @@ class Post extends Model
     public function tags()
     {
         return $this->belongsToMany('App\Tag');
+    }
+
+    public function links()
+    {
+        return $this->hasMany('App\Link');
     }
 }

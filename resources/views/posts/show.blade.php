@@ -1,11 +1,11 @@
 @extends('layouts.app')
 
 @section('title')
-    {{config('app.name')}} - {{$post->title}}
+    {{config('app.name')}} - {{$post->post_title}}
 @endsection
 
 @section('header_title')
-    {{$post->title}}
+    {{$post->post_title}}
 @endsection
 
 @section('header_content')
@@ -35,7 +35,7 @@
                                 <div class="col-md-12">
                                     <header>
                                         <h1>
-                                            {{$post->title}}
+                                            {{$post->post_title}}
                                             <div class="pull-right">
                                                 @foreach($post->tags as $tag)
                                                     <p class="show-tags">{{$tag->tag}}</p>
@@ -46,7 +46,7 @@
                                     <hr>
                                     <section>
 
-                                        <p>{{ $post->content}}</p>
+                                        <p>{{ $post->post_content}}</p>
 
                                         <em class="pull-right">
                                             <span class="glyphicon glyphicon-pencil"></span> {{ $post->user->name }} on {!! $post->created_at->format('d-m-Y') !!}

@@ -15,8 +15,8 @@ class CreatePostsTable extends Migration
     {
         Schema::create('posts', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('title',80);
-            $table->text('content');
+            $table->string('post_title',80);
+            $table->text('post_content');
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')
                 ->references('id')

@@ -23,8 +23,8 @@ class PostsTableSeeder extends Seeder
         {
             $date = $this->randDate();
             DB::table('posts')->insert([
-                'title' => 'Title'.$i,
-                'content'=>'content'.$i.'Lorem ipsum dolor sit amet, consectetur adipisicing elit,
+                'post_title' => 'Title'.$i,
+                'post_content'=>'content'.$i.'Lorem ipsum dolor sit amet, consectetur adipisicing elit,
                  sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
                  Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut 
                  aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in 

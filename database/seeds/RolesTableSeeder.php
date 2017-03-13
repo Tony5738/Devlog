@@ -23,14 +23,14 @@ class RolesTableSeeder extends Seeder
 
         $date = $this->randDate();
         DB::table('roles')->insert([
-            'name' => 'admin',
+            'role' => 'admin',
             'created_at' =>$date,
             'updated_at' => $date
         ]);
 
         $date = $this->randDate();
         DB::table('roles')->insert([
-            'name' => 'guest',
+            'role' => 'guest',
             'created_at' =>$date,
             'updated_at' => $date
         ]);

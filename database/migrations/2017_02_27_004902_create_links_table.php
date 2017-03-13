@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateAudiosTable extends Migration
+class CreateLinksTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class CreateAudiosTable extends Migration
      */
     public function up()
     {
-        Schema::create('audios', function (Blueprint $table) {
+        Schema::create('links', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('audio_title');
-            $table->string('audio_url')->unique();
+            $table->string('link_title');
+            $table->string('link_url')->unique();
             $table->integer('post_id')->unsigned();
             $table->foreign('post_id')
                 ->references('id')
@@ -34,10 +34,10 @@ class CreateAudiosTable extends Migration
      */
     public function down()
     {
-        Schema::table('audios',function(Blueprint $table){
-            $table->dropForeign('audios_post_id_foreign');
+        Schema::table('links',function(Blueprint $table){
+            $table->dropForeign('links_post_id_foreign');
         });
 
-        Schema::drop('audios');
+        Schema::drop('links');
     }
 }

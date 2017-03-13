@@ -100,16 +100,16 @@
 
         @yield('content')
 
-        <footer class="jumbotron fixed-height">
+        <!--<footer class="jumbotron fixed-height">
             <div class="container">
                 <p>Anthony Bruhl</p>
             </div>
-        </footer>
+        </footer>-->
 
     </div>
 
     <!-- Scripts -->
     <script src="/js/app.js"></script>
-    @yield('script')
+    @yield('scripts')
 </body>
 </html>

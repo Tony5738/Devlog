@@ -7,7 +7,7 @@ use App\Post;
 class PostRepository extends ResourceRepository
 {
 
-    protected $post;
+
 
     public function __construct(Post $post)
     {

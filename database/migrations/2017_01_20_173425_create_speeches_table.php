@@ -15,7 +15,7 @@ class CreateSpeechesTable extends Migration
     {
         Schema::create('speeches', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('content');
+            $table->string('speech');
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')
                 ->references('id')

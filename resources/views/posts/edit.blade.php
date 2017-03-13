@@ -16,14 +16,14 @@
                     <div class="panel-body">
                         {!! Form::open(['route' => ['post.update', $post->id], 'method' => 'PUT']) !!}
 
-                            <div class="form-group {!! $errors->has('title') ? 'has-error' : '' !!}">
-                                {!! Form::text('title', $post->title, ['class' => 'form-control', 'placeholder' => 'Title']) !!}
-                                {!! $errors->first('title', '<small class="help-block">:message</small>') !!}
+                            <div class="form-group {!! $errors->has('post_title') ? 'has-error' : '' !!}">
+                                {!! Form::text('post_title', $post->post_title, ['class' => 'form-control', 'placeholder' => 'Title']) !!}
+                                {!! $errors->first('post_title', '<small class="help-block">:message</small>') !!}
                             </div>
 
-                            <div class="form-group {!! $errors->has('content') ? 'has-error' : '' !!}">
-                                {!! Form::textarea ('content', $post->content, ['class' => 'form-control', 'placeholder' => 'Content']) !!}
-                                {!! $errors->first('content', '<small class="help-block">:message</small>') !!}
+                            <div class="form-group {!! $errors->has('post_content') ? 'has-error' : '' !!}">
+                                {!! Form::textarea ('post_content', $post->post_content, ['class' => 'form-control', 'placeholder' => 'Content']) !!}
+                                {!! $errors->first('post_content', '<small class="help-block">:message</small>') !!}
                             </div>
 
 
