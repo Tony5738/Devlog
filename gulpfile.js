@@ -36,7 +36,7 @@ elixir(function(mix){
     mix.copy('resources/assets' + paths.jquery_ui + '/themes/base/images/**', 'public/css/images');
 
     //Copy scripts straight to public
-    mix.copy('resources/assets/js/link.js','public/js/link.js');
+    mix.copy('resources/assets/js/media.js','public/js/media.js');
 
     //Merge app styles
     mix.styles([

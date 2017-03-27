@@ -4,24 +4,33 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\PostRequest;
 use App\Post;
+use App\Repositories\LinkRepository;
 use App\Repositories\TagRepository;
 use Illuminate\Http\Request;
 use App\Repositories\PostRepository;
+use phpDocumentor\Reflection\DocBlock\Tags\Link;
 
 class PostController extends Controller
 {
 
     protected $postRepository;
+    protected $linkRepository;
+    protected $tagRepository;
 
     protected $nbrPerPage = 10;
 
 
-    public function __construct(PostRepository $postRepository)
+    public function __construct(PostRepository $postRepository,
+                                LinkRepository $linkRepository,
+                                TagRepository $tagRepository)
     {
         $this->middleware('auth',['except' => ['index','indexTag','show']]);
         $this->middleware('admin',['only' => ['destroy','store','edit','update']]);
 
         $this->postRepository = $postRepository;
+        $this->linkRepository = $linkRepository;
+        $this->tagRepository = $tagRepository;
+
     }
     /**
      * Display a listing of the resource.
@@ -41,18 +50,45 @@ class PostController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param TagRepository $tagRepository
+     * @param PostRequest|Request $request
      * @return \Illuminate\Http\Response
+     * @internal param TagRepository $tagRepository
      */
-    public function store(PostRequest $request, TagRepository $tagRepository)
+    public function store(PostRequest $request)
     {
-        $inputs = array_merge($request->all(),['user_id'=>$request->user()->id]);
+        //todo request
+        $inputs = array_merge(
+            $request->except('image_title', 'image','link_title','link_url','doc_name','doc','video_title','video'),
+            ['user_id'=>$request->user()->id]
+        );
+
         $post = $this->postRepository->store($inputs);
         if(isset($inputs['tags']))
         {
-            $tagRepository->storeTagsOnPost($post,$inputs['tags']);
+            $this->tagRepository->storeTagsOnPost($post,$inputs['tags']);
         }
+
+        if($request->has('image') && $request->has('image_title'))
+        {
+
+        }
+
+        if($request->has('link_title') && $request->has('link_url'))
+        {
+            $this->linkRepository->store(array_merge($request->get('link_title'),$request->get('link_url')));
+        }
+
+        if($request->has('doc_name') && $request->has('doc'))
+        {
+
+        }
+
+        if($request->has('video_title') && $request->has('video'))
+        {
+
+        }
+
+
         return redirect(route('post.index'))->with('message','Post created');
     }
 
@@ -94,19 +130,19 @@ class PostController extends Controller
      * Update the specified resource in storage.
      *
      * @param PostRequest|Request $request
-     * @param TagRepository $tagRepository
-     * @param $post
+     * @param Post $post
      * @return \Illuminate\Http\Response
+     * @internal param TagRepository $tagRepository
      * @internal param int $id
      */
-    public function update(PostRequest $request, TagRepository $tagRepository, Post $post)
+    public function update(PostRequest $request,  Post $post)
     {
         //todo policy can't update if you are not the owner
-        $inputs = array_merge($request->all());
+        $inputs = $request->except('tags');
         $this->postRepository->update($post->id ,$inputs);
-        if(isset($inputs['tags']))
+        if($request->has('tags'))
         {
-            $tagRepository->updateTagsOnPost($post,$inputs['tags']);
+            $this->tagRepository->updateTagsOnPost($post,$request->get('tags'));
         }
         return redirect(route('post.index'))->with('message','Post updated');
     }
@@ -114,17 +150,17 @@ class PostController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param TagRepository $tagRepository
      * @param  int $id
      * @return \Illuminate\Http\Response
+     * @internal param TagRepository $tagRepository
      */
-    public function destroy(TagRepository $tagRepository,$id)
+    public function destroy($id)
     {
         //todo policy can't delete if you are not the owner
         $post =  $this->postRepository->getById($id);
         if(!$post->tags()->get()->isEmpty())
         {
-            $tagRepository->deleteTagsOnPost($post);
+            $this->tagRepository->deleteTagsOnPost($post);
         }
         $this->postRepository->destroy($id);
         return redirect()->back()->with('message','Post deleted');

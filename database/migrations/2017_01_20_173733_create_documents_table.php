@@ -15,7 +15,7 @@ class CreateDocumentsTable extends Migration
     {
         Schema::create('documents', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('doc_name');
+            $table->string('doc_name',80);
             $table->string('doc_url')->unique();
             $table->integer('post_id')->unsigned();
             $table->foreign('post_id')

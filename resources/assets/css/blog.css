@@ -15,3 +15,7 @@ a {
     white-space: nowrap;
     vertical-align: middle;
 }
+
+.media-form{
+    max-height: 150px;
+}

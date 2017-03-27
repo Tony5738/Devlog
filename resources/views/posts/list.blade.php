@@ -91,7 +91,7 @@
 
 @section('scripts')
 
-    <script src="/js/link.js"></script>
+    <script src="/js/media.js"></script>
 
 
 @endsection
