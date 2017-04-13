@@ -3,9 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\PostRequest;
+use App\Image;
 use App\Post;
+use App\Repositories\DocumentRepository;
+use App\Repositories\ImageRepository;
 use App\Repositories\LinkRepository;
 use App\Repositories\TagRepository;
+use App\Repositories\VideoRepository;
 use Illuminate\Http\Request;
 use App\Repositories\PostRepository;
 use phpDocumentor\Reflection\DocBlock\Tags\Link;
@@ -15,21 +19,32 @@ class PostController extends Controller
 
     protected $postRepository;
     protected $linkRepository;
+    protected $imageRepository;
+    protected $documentRepository;
+    protected $videoRepository;
     protected $tagRepository;
+
 
     protected $nbrPerPage = 10;
 
 
     public function __construct(PostRepository $postRepository,
                                 LinkRepository $linkRepository,
-                                TagRepository $tagRepository)
+                                TagRepository $tagRepository,
+                                ImageRepository $imageRepository,
+                                DocumentRepository $documentRepository,
+                                VideoRepository $videoRepository)
     {
+
         $this->middleware('auth',['except' => ['index','indexTag','show']]);
-        $this->middleware('admin',['only' => ['destroy','store','edit','update']]);
+        $this->middleware('admin',['only' => ['create','store','destroy','store','edit','update']]);
 
         $this->postRepository = $postRepository;
         $this->linkRepository = $linkRepository;
         $this->tagRepository = $tagRepository;
+        $this->imageRepository = $imageRepository;
+        $this->documentRepository = $documentRepository;
+        $this->videoRepository = $videoRepository;
 
     }
     /**
@@ -40,7 +55,7 @@ class PostController extends Controller
     public function index()
     {
 
-        $posts = $this->postRepository->getPostsWithUserAndTagsPaginate($this->nbrPerPage);
+        $posts = $this->postRepository->getPostsWithUserAndTagsAndLinkAndDocumentAndImageAndVideoPaginate($this->nbrPerPage);
         $links = $posts->render();
 
         return view('posts.list',compact('posts','links'));
@@ -56,36 +71,35 @@ class PostController extends Controller
      */
     public function store(PostRequest $request)
     {
-        //todo request
-        $inputs = array_merge(
-            $request->except('image_title', 'image','link_title','link_url','doc_name','doc','video_title','video'),
-            ['user_id'=>$request->user()->id]
-        );
+
+        $inputs = array_merge($request->all(),['user_id'=>$request->user()->id]);
 
         $post = $this->postRepository->store($inputs);
+
         if(isset($inputs['tags']))
         {
             $this->tagRepository->storeTagsOnPost($post,$inputs['tags']);
         }
 
-        if($request->has('image') && $request->has('image_title'))
-        {
 
+        if(isset($inputs['image_title']) && $inputs['image_title']!= null && isset($inputs['image']))
+        {
+            $this->imageRepository->store(array_merge($request->only('image_title','image'),['post_id'=>$post->id]));
         }
 
-        if($request->has('link_title') && $request->has('link_url'))
+        if(isset($inputs['link_title']) && $inputs['link_title']!= null && isset($inputs['link_url']) && $inputs['link_url']!= null)
         {
-            $this->linkRepository->store(array_merge($request->get('link_title'),$request->get('link_url')));
+            $this->linkRepository->store(array_merge($request->only('link_title','link_url'),['post_id'=>$post->id]));
         }
 
-        if($request->has('doc_name') && $request->has('doc'))
+        if(isset($inputs['document_title']) && $inputs['document_title']!= null && isset($inputs['document']))
         {
-
+            $this->documentRepository->store(array_merge($request->only('document_title','document'),['post_id' => $post->id]));
         }
 
-        if($request->has('video_title') && $request->has('video'))
+        if(isset($inputs['video_title']) && $inputs['video_title']!= null && isset($inputs['video']))
         {
-
+            $this->videoRepository->store(array_merge($request->only('video_title','video'),['post_id' => $post->id]));
         }
 
 
@@ -100,7 +114,7 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        $post = $this->postRepository->getPostByIdWithUserAndTags($id);
+        $post = $this->postRepository->getPostByIdWithUserAndTagsAndLinkAndDocumentAndImageAndVideo($id);
 
         return view('posts.show', compact('post'));
     }
@@ -114,7 +128,7 @@ class PostController extends Controller
     public function edit($id)
     {
         //todo policy can't edit if you are not the owner
-        $post = $this->postRepository->getPostByIdWithUserAndTags($id);
+        $post = $this->postRepository->getPostByIdWithUserAndTagsAndLinkAndDocumentAndImageAndVideo($id);
 
         if(!$post->tags()->get()->isEmpty())
         {
@@ -137,13 +151,35 @@ class PostController extends Controller
      */
     public function update(PostRequest $request,  Post $post)
     {
+
         //todo policy can't update if you are not the owner
-        $inputs = $request->except('tags');
+        $inputs = $request->all();
         $this->postRepository->update($post->id ,$inputs);
-        if($request->has('tags'))
+        if(isset($inputs['tags']))
         {
             $this->tagRepository->updateTagsOnPost($post,$request->get('tags'));
         }
+
+        if(isset($inputs['image_title']) && $inputs['image_title']!= null && isset($inputs['image']))
+        {
+            $this->imageRepository->updateImageOnPost($post,array_merge($request->only('image_title','image'),['post_id'=>$post->id]));
+        }
+
+        if(isset($inputs['link_title']) && $inputs['link_title']!= null && isset($inputs['link_url']) && $inputs['link_url']!= null)
+        {
+            $this->linkRepository->updateLinkOnPost($post,array_merge($request->only('link_title','link_url'),['post_id'=>$post->id]));
+        }
+
+        if(isset($inputs['document_title']) && $inputs['document_title']!= null && isset($inputs['document']))
+        {
+            $this->documentRepository->updateDocumentOnPost($post,array_merge($request->only('document_title','document'),['post_id' => $post->id]));
+        }
+
+        if(isset($inputs['video_title']) && $inputs['video_title']!= null && isset($inputs['video']))
+        {
+            $this->videoRepository->updateVideoOnPost($post,array_merge($request->only('video_title','video'),['post_id' => $post->id]));
+        }
+
         return redirect(route('post.index'))->with('message','Post updated');
     }
 
@@ -162,13 +198,37 @@ class PostController extends Controller
         {
             $this->tagRepository->deleteTagsOnPost($post);
         }
+
+        if($post->link != null)
+        {
+            $post->link->delete();
+        }
+
+        if($post->image != null)
+        {
+            $this->imageRepository->destroyImageOnPost($post);
+        }
+
+        if($post->video != null)
+        {
+            $this->videoRepository->destroyVideoOnPost($post);
+        }
+
+        if($post->document != null)
+        {
+            $this->documentRepository->destroyDocumentOnPost($post);
+        }
+
+
+
+
         $this->postRepository->destroy($id);
         return redirect()->back()->with('message','Post deleted');
     }
 
     public function indexTag($tag)
     {
-        $posts = $this->postRepository->getPostsWithUserAndTagsForTagPaginate($tag, $this->nbrPerPage);
+        $posts = $this->postRepository->getPostsWithUserAndTagsAndLinkAndDocumentAndImageAndVideoForTagPaginate($tag, $this->nbrPerPage);
         $links = $posts->render();
 
         return view('posts.list', compact('posts', 'links'))

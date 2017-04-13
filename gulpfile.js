@@ -20,7 +20,8 @@ gulp.task('bower', function(){
 var paths={
     'bootstrap':'vendor/bootstrap/dist',
     'jquery':'vendor/jquery/dist',
-    'jquery_ui':'vendor/jquery-ui'
+    'jquery_ui':'vendor/jquery-ui',
+    'font_awesome':'vendor/font-awesome'
 };
 
 elixir.config.sourcemaps = false;
@@ -31,19 +32,20 @@ elixir(function(mix){
 
     //Copy fonts straight to public
     mix.copy('resources/assets/' + paths.bootstrap + '/fonts/**', 'public/fonts');
+    mix.copy('resources/assets/' + paths.font_awesome + '/fonts/**','public/fonts');
 
     //Copy images straight to public
     mix.copy('resources/assets' + paths.jquery_ui + '/themes/base/images/**', 'public/css/images');
 
-    //Copy scripts straight to public
-    mix.copy('resources/assets/js/media.js','public/js/media.js');
 
     //Merge app styles
     mix.styles([
         '../../assets/' + paths.bootstrap + '/css/bootstrap.css',
         '../../assets/' + paths.bootstrap + '/css/bootstrap-theme.css',
         '../../assets/' + paths.jquery_ui + '/themes/base/jquery-ui.css',
-        'blog.css'
+        '../../assets/' + paths.font_awesome + '/css/font-awesome.css',
+        'blog.css',
+        'site.css'
     ], 'public/css/app.css');
 
     //Merge app scripts

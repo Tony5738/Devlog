@@ -14,25 +14,25 @@ class PostRepository extends ResourceRepository
         $this->model = $post;
     }
 
-    private function queryPostsWithUserAndTags()
+    private function queryPostsWithUserAndTagsAndLinkAndDocumentAndImageAndVideo()
     {
-        return $this->model->with('user', 'tags')
+        return $this->model->with('user', 'tags','video','image','link','document')
             ->orderBy('posts.created_at', 'desc');
     }
 
-    public function getPostByIdWithUserAndTags($id)
+    public function getPostByIdWithUserAndTagsAndLinkAndDocumentAndImageAndVideo($id)
     {
-        return $this->queryPostsWithUserAndTags()->where('id', $id)->first();
+        return $this->queryPostsWithUserAndTagsAndLinkAndDocumentAndImageAndVideo()->where('id', $id)->first();
     }
 
-    public function getPostsWithUserAndTagsPaginate($n)
+    public function getPostsWithUserAndTagsAndLinkAndDocumentAndImageAndVideoPaginate($n)
     {
-        return $this->queryPostsWithUserAndTags()->paginate($n);
+        return $this->queryPostsWithUserAndTagsAndLinkAndDocumentAndImageAndVideo()->paginate($n);
     }
 
-    public function getPostsWithUserAndTagsForTagPaginate($tag, $n)
+    public function getPostsWithUserAndTagsAndLinkAndDocumentAndImageAndVideoForTagPaginate($tag, $n)
     {
-        return $this->queryPostsWithUserAndTags()
+        return $this->queryPostsWithUserAndTagsAndLinkAndDocumentAndImageAndVideo()
             ->whereHas('tags', function($query) use ($tag)
             {
                 $query->where('tags.tag_url', $tag);

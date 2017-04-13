@@ -2,8 +2,8 @@
 <article>
     <div class="container">
         <div class="col-sm-12">
-            <div class="panel panel-info">
-                <div class="panel-heading">Add a post</div>
+            <div class="panel panel-customize-orange">
+                <div class="panel-heading"><strong>Add a post</strong></div>
                 <div class="panel-body">
 
                     {!! Form::open(['route' => 'post.store', 'method' => 'POST','enctype' =>"multipart/form-data"]) !!}
@@ -28,120 +28,107 @@
                             </div>
                         </div>
 
-                        <div class="row">
-                            <div class="col-lg-6">
-                                <div class="panel panel-info">
-                                    <div id="link" class="panel-heading">Link
-                                        <div class="panel-body media-form">
-                                            <div class="form-group {!! $errors->has('link_title') ? 'has-error' : '' !!}">
-                                                {!! Form::label('link_title', 'Link title', array('class' => 'control-label' )) !!}
+                        <div>
 
-                                                {!! Form::text('link_title', null, ['class' => 'form-control']) !!}
-                                                {!! $errors->first('link_title', '<small class="help-block">:message</small>') !!}
+                            <h3>Medias</h3>
 
-                                            </div>
+                            <!-- Nav tabs -->
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="link" class="active"><a href="#link" aria-controls="link" role="tab" data-toggle="tab"><i class="fa fa-link fa-fw"></i></a></li>
+                                <li role="image"><a href="#image" aria-controls="image" role="tab" data-toggle="tab"><i class="fa fa-picture-o fa-fw"></i></a></li>
+                                <li role="video"><a href="#video" aria-controls="video" role="tab" data-toggle="tab"><i class="fa fa-film fa-fw"></i></a></li>
+                                <li role="document"><a href="#document" aria-controls="document" role="tab" data-toggle="tab"><i class="fa fa-file-text fa-fw"></i></a></li>
+                            </ul>
 
-                                            <div class="form-group {!! $errors->has('link_url') ? 'has-error' : '' !!}">
-                                                {!! Form::label('link_url', 'Link URL', array('class' => 'control-label' )) !!}
+                            <!-- Tab panes -->
+                            <div class="tab-content">
+                                <div role="tabpanel" class="tab-pane active" id="link">
 
-                                                {!! Form::text('link_url', null, ['class' => 'form-control']) !!}
-                                                {!! $errors->first('link_url', '<small class="help-block">:message</small>') !!}
+                                    <div class="form-group {!! $errors->has('link_title') ? 'has-error' : '' !!}">
+                                        {!! Form::label('link_title', 'Link title', array('class' => 'control-label col-md-4' )) !!}
 
-                                            </div>
+                                        <div class="col-md-8">
+                                            {!! Form::text('link_title', null, ['class' => 'form-control']) !!}
+                                            {!! $errors->first('link_title', '<small class="help-block">:message</small>') !!}
+                                        </div>
+                                    </div>
 
+                                    <div class="form-group {!! $errors->has('link_url') ? 'has-error' : '' !!}">
+                                        {!! Form::label('link_url', 'Link URL', array('class' => 'control-label col-md-4' )) !!}
+                                        <div class="col-md-8">
+                                            {!! Form::text('link_url', null, ['class' => 'form-control']) !!}
+                                            {!! $errors->first('link_url', '<small class="help-block">:message</small>') !!}
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <!--todo file input responsive to fix-->
-                            <div class="col-lg-6">
-                                <div  class="panel panel-info">
-                                    <div id="image" class="panel-heading">Image
-                                        <div class="panel-body media-form">
-                                            <div class="form-group {!! $errors->has('image_title') ? 'has-error' : '' !!}">
-                                                {!! Form::label('image_title', 'Image title', array('class' => 'control-label' )) !!}
+                                <div role="tabpanel" class="tab-pane" id="image">
+                                    <div class="form-group {!! $errors->has('image_title') ? 'has-error' : '' !!}">
+                                        {!! Form::label('image_title', 'Image title', array('class' => 'control-label col-md-4' )) !!}
 
-                                                {!! Form::text('image_title', null, ['class' => 'form-control']) !!}
-                                                {!! $errors->first('image_title', '<small class="help-block">:message</small>') !!}
-
-                                            </div>
-
-                                            <div class="form-group {!! $errors->has('image') ? 'has-error' : '' !!}">
-                                                {!! Form::label('image', 'Image', array('class' => 'control-label' )) !!}
-
-                                                {!! Form::file('image') !!}
-                                                {!! $errors->first('image', '<small class="help-block">:message</small>') !!}
-
-
-                                            </div>
-
+                                        <div class="col-md-8">
+                                            {!! Form::text('image_title', null, ['class' => 'form-control']) !!}
+                                            {!! $errors->first('image_title', '<small class="help-block">:message</small>') !!}
                                         </div>
+
+
+                                    </div>
+
+                                    <div class="form-group {!! $errors->has('image') ? 'has-error' : '' !!}">
+                                        {!! Form::label('image', 'Image', array('class' => 'control-label col-md-4' )) !!}
+
+                                        <div class="col-md-8">
+                                            {!! Form::file('image') !!}
+                                            {!! $errors->first('image', '<small class="help-block">:message</small>') !!}
+                                        </div>
+
                                     </div>
                                 </div>
-                            </div>
-                            <!--todo file input responsive to fix-->
-                            <div class="col-lg-6">
-                                <div  class="panel panel-info">
-                                    <div id="video" class="panel-heading">Video
-                                        <div class="panel-body media-form">
-                                            <div class="form-group {!! $errors->has('video_title') ? 'has-error' : '' !!}">
-                                                {!! Form::label('video_title', 'Video title', array('class' => 'control-label' )) !!}
+                                <div role="tabpanel" class="tab-pane" id="video">
+                                    <div class="form-group {!! $errors->has('video_title') ? 'has-error' : '' !!}">
+                                        {!! Form::label('video_title', 'Video title', array('class' => 'control-label col-md-4' )) !!}
 
-                                                {!! Form::text('video_title', null, ['class' => 'form-control']) !!}
-                                                {!! $errors->first('video_title', '<small class="help-block">:message</small>') !!}
-
-                                            </div>
-
-                                            <div class="form-group {!! $errors->has('video') ? 'has-error' : '' !!}">
-                                                {!! Form::label('video', 'Video', array('class' => 'control-label' )) !!}
-
-                                                {!! Form::file('video') !!}
-                                                {!! $errors->first('video', '<small class="help-block">:message</small>') !!}
-
-
-                                            </div>
-
+                                        <div class="col-md-8">
+                                            {!! Form::text('video_title', null, ['class' => 'form-control']) !!}
+                                            {!! $errors->first('video_title', '<small class="help-block">:message</small>') !!}
                                         </div>
                                     </div>
+
+                                    <div class="form-group {!! $errors->has('video') ? 'has-error' : '' !!}">
+                                        {!! Form::label('video', 'Video', array('class' => 'control-label col-md-4' )) !!}
+
+                                        <div class="col-md-8">
+                                            {!! Form::file('video') !!}
+                                            {!! $errors->first('video', '<small class="help-block">:message</small>') !!}
+                                        </div>
+
+
+                                    </div>
                                 </div>
-                            </div>
-                            <!--todo file input responsive to fix-->
-                            <div class="col-lg-6">
-                                <div  class="panel panel-info">
-                                    <div id="document" class="panel-heading">Document
-                                        <div class="panel-body media-form">
-                                            <div class="form-group {!! $errors->has('doc_name') ? 'has-error' : '' !!}">
-                                                {!! Form::label('doc_name', 'Document name', array('class' => 'control-label' )) !!}
+                                <div role="tabpanel" class="tab-pane" id="document">
+                                    <div class="form-group {!! $errors->has('document_title') ? 'has-error' : '' !!}">
+                                        {!! Form::label('document_title', 'Document title', array('class' => 'control-label col-md-4' )) !!}
 
-                                                {!! Form::text('doc_name', null, ['class' => 'form-control']) !!}
-                                                {!! $errors->first('doc_name', '<small class="help-block">:message</small>') !!}
+                                        <div class="col-md-8">
+                                            {!! Form::text('document_title', null, ['class' => 'form-control']) !!}
+                                            {!! $errors->first('document_title', '<small class="help-block">:message</small>') !!}
+                                        </div>
 
-                                            </div>
+                                    </div>
 
-                                            <div class="form-group {!! $errors->has('doc') ? 'has-error' : '' !!}">
-                                                {!! Form::label('doc', 'Document', array('class' => 'control-label' )) !!}
+                                    <div class="form-group {!! $errors->has('document') ? 'has-error' : '' !!}">
+                                        {!! Form::label('document', 'Document', array('class' => 'control-label col-md-4' )) !!}
+                                        <div class="col-md-8">
 
-                                                {!! Form::file('doc') !!}
-                                                {!! $errors->first('doc', '<small class="help-block">:message</small>') !!}
-
-
-                                            </div>
+                                            {!! Form::file('document') !!}
+                                            {!! $errors->first('document', '<small class="help-block">:message</small>') !!}
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-
-
-
-
-
-
-
-
                         <div class="row">
                             <div class="col-lg-2">
-                                {!! Form::submit('Send !', ['class' => 'btn btn-info']) !!}
+                                {!! Form::submit('Send !', ['class' => 'btn btn-customize-blue']) !!}
                             </div>
                         </div>
 

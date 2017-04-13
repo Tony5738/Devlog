@@ -1,0 +1,59 @@
+#home-header{
+    background: url('/site_images/tom_crean.jpg') no-repeat center center fixed;
+    background-size:100% auto;
+    color:#d8d8d8;
+    padding-bottom: 30%;
+    margin-bottom: 2%;
+}
+
+.navbar{
+    position: relative;
+    min-height: 50px;
+    margin-bottom: 0px;
+    border-bottom: 3px solid #67bdec;
+}
+
+.panel-customize-orange{
+    border: 3px #f2542d solid;
+}
+
+.panel-customize-blue{
+    border: 3px #67bdec solid;
+}
+
+.btn-customize-blue{
+    border: 3px #67bdec solid;
+    background-color: #ffffff;
+}
+
+.btn-customize-orange{
+    border: 3px #f2542d solid;
+    background-color: #ffffff;
+}
+
+.alert-customize-blue{
+    border: 3px #67bdec solid;
+
+}
+
+#post-list-header{
+    background: url('/site_images/desk.jpg') no-repeat fixed;
+    background-size:100% auto;
+    color:#d8d8d8;
+    padding-bottom: 35%;
+    margin-bottom:2%;
+
+}
+
+a {
+    color: #000000;
+    text-decoration: none;
+}
+
+a:hover{
+    color:#67bdec;
+}
+
+canvas{
+    position:fixed;
+}

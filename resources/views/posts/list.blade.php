@@ -4,22 +4,31 @@
     {{config('app.name')}} - Blog
 @endsection
 
-@section('header_title')
-    Blog
-@endsection
-
-
 @section('content')
 
-    <section class="container">
+    <section>
+        <!--<div class="row">
+            <div class="col-lg-12">
+                <h2 class="page-header">Blog</h2>
+            </div>
+        </div>-->
 
-        @if(isset($info))
-            <div class="row alert alert-info">{{ $info }}</div>
-        @endif
+        <header id="post-list-header">
+            <div class="container">
+                <h1 class="page-header">Blog</h1>
+            </div>
+        </header>
 
-        @if(Session::get('message'))
-            <div class="row alert alert-info">{{ Session::get('message') }}</div>
-        @endif
+        <div class="container">
+            @if(isset($info))
+                <div class="row alert alert-customize-blue">{{ $info }}</div>
+            @endif
+
+            @if(Session::get('message'))
+                <div class="row alert alert-customize-blue">{{ Session::get('message') }}</div>
+            @endif
+        </div>
+
 
 
         @if(Auth::check() and Auth::user()->isAdmin())
@@ -27,6 +36,7 @@
         @endif
 
         @if(!$posts->isEmpty())
+
             @foreach($posts as $post)
 
                 <article>
@@ -37,29 +47,46 @@
                                     <div class="panel-body">
                                         <div class="col-md-12">
                                             <header>
-                                                <h1>{!! link_to('post/'. $post->id,$post->post_title) !!}
+                                                <h3>{!! link_to('post/'. $post->id,$post->post_title) !!}
                                                     <div class="pull-right">
                                                         @foreach($post->tags as $tag)
 
-                                                            {!! link_to('post/tag/' . $tag->tag_url, $tag->tag, ['class' => 'btn btn-xs btn-info']) !!}
+                                                            {!! link_to('post/tag/' . $tag->tag_url, $tag->tag, ['class' => 'btn btn-xs btn-customize-blue']) !!}
                                                         @endforeach
                                                     </div>
-                                                </h1>
+                                                </h3>
                                             </header>
                                             <hr>
                                             <section>
+                                                <article>
+                                                    <p>{{ $post->post_content}}</p>
 
-                                                <p>{{ $post->post_content}}</p>
+                                                    @if($post->link != null)
+                                                        <i class="fa fa-link fa-fw pull-right"></i>
+                                                    @endif
 
-                                                @if(Auth::check() and Auth::user()->isAdmin())
-                                                    {!! Form::open(['method' => 'DELETE', 'route' => ['post.destroy', $post->id]]) !!}
-                                                    {!! Form::submit('Delete the post', ['class' => 'btn btn-danger btn-xs ', 'onclick' => 'return confirm(\'Really delete this post ?\')']) !!}
-                                                    {!! Form::close() !!}
-                                                @endif
+                                                    @if($post->image != null)
+                                                        <i class="fa fa-picture-o fa-fw pull-right"></i>
+                                                    @endif
 
-                                                <em class="pull-right">
-                                                    <span class="glyphicon glyphicon-pencil"></span> {{ $post->user->name }} on {!! $post->created_at->format('d-m-Y') !!}
-                                                </em>
+                                                    @if($post->video != null)
+                                                        <i class="fa fa-film fa-fw pull-right"></i>
+                                                    @endif
+
+                                                    @if($post->document != null)
+                                                        <i class="fa fa-file-text fa-fw pull-right"></i>
+                                                    @endif
+
+                                                    @if(Auth::check() and Auth::user()->isAdmin())
+                                                        {!! Form::open(['method' => 'DELETE', 'route' => ['post.destroy', $post->id]]) !!}
+                                                        {!! Form::submit('Delete the post', ['class' => 'btn btn-customize-red btn-xs ', 'onclick' => 'return confirm(\'Really delete this post ?\')']) !!}
+                                                        {!! Form::close() !!}
+                                                    @endif
+
+                                                    <em class="pull-right">
+                                                        <span class="glyphicon glyphicon-pencil"></span> {{ $post->user->name }} on {!! $post->created_at->format('d-m-Y') !!}
+                                                    </em>
+                                                </article>
                                             </section>
 
                                         </div>
@@ -70,10 +97,12 @@
                     </div>
                 </article>
                 <br>
-
             @endforeach
 
+        <div class="container">
             {!! $links !!}
+        </div>
+
         @else
             <div class="container">
                 <div class="row">
@@ -89,9 +118,3 @@
 
 @endsection
 
-@section('scripts')
-
-    <script src="/js/media.js"></script>
-
-
-@endsection

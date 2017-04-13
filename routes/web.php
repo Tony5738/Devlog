@@ -18,8 +18,16 @@ Route::get('/home', 'HomeController@index');
 //Auth management
 Auth::routes();
 
+//Disable register routes
+Route::get('register', function(){
+    abort(404);
+});
+Route::post('register', function(){
+    abort(404);
+});
+
 //User management
-Route::resource('user','UserController');
+//Route::resource('user','UserController');
 
 //Post management
 Route::resource('post','PostController');

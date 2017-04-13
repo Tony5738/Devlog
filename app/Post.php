@@ -26,8 +26,23 @@ class Post extends Model
         return $this->belongsToMany('App\Tag');
     }
 
-    public function links()
+    public function link()
     {
-        return $this->hasMany('App\Link');
+        return $this->hasOne('App\Link');
+    }
+
+    public function video()
+    {
+        return $this->hasOne('App\Video');
+    }
+
+    public function image()
+    {
+        return $this->hasOne('App\Image');
+    }
+
+    public function document()
+    {
+        return $this->hasOne('App\Document');
     }
 }

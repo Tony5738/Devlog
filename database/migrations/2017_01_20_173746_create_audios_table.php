@@ -16,7 +16,7 @@ class CreateAudiosTable extends Migration
         Schema::create('audios', function (Blueprint $table) {
             $table->increments('id');
             $table->string('audio_title',80);
-            $table->string('audio_url')->unique();
+            $table->string('audio')->unique();
             $table->integer('post_id')->unsigned();
             $table->foreign('post_id')
                 ->references('id')

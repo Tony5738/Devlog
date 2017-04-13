@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Link extends Model
+class Document extends Model
 {
     /**
      * The attributes that are mass assignable.
@@ -12,8 +12,10 @@ class Link extends Model
      * @var array
      */
     protected $fillable = [
-        'link_title','link_url','post_id'
+        'document_title','document',
     ];
+
+
 
 
 

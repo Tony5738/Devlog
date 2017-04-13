@@ -28,12 +28,12 @@ class PostRequest extends FormRequest
             'post_content' => 'required',
             'tags' => ['Regex:/^[A-Za-z0-9]{1,50}?(,[A-Za-z0-9]{1,50})*$/'],
             'link_title' => 'max:80',
-            'link_url' => 'url',
+            'link_url' => 'url|unique:links',
             'image_title' => 'max:80',
             'image' =>'mimes:jpeg,jpg,png',
-            'doc_name' => 'max:80',
-            'doc' => 'mimes:pdf',
-            'video_title'=>'maw:80',
+            'document_title' => 'max:80',
+            'document' => 'mimes:pdf',
+            'video_title'=>'max:80',
             'video' => 'mimes:mp4',
 
 

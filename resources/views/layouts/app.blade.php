@@ -64,11 +64,11 @@
 
                                 <ul class="dropdown-menu" role="menu">
 
-                                    <li><a href="{{ url('/user/'.Auth::user()->id) }}">Profile</a></li>
+                                    {{--<li><a href="{{ url('/user/'.Auth::user()->id) }}">Profile</a></li>
                                     @if(Auth::user()->isAdmin())
                                         <li><a href="{{ url('/register') }}">Register an guest</a></li>
                                         <li><a href="{{ url('/user') }}">Guest administration</a></li>
-                                    @endif
+                                    @endif--}}
 
                                     <li>
                                         <a href="{{ url('/logout') }}"
@@ -91,15 +91,8 @@
 
 
 
-        <header class="jumbotron">
-            <div class="container">
-                    <h1 class="page-header">@yield('header_title')</h1>
-                    <h2 class="page-header">@yield('header_content')</h2>
-            </div>
-        </header>
-
         @yield('content')
-
+<!--todo footer to fix-->
         <!--<footer class="jumbotron fixed-height">
             <div class="container">
                 <p>Anthony Bruhl</p>
