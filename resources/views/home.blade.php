@@ -20,6 +20,7 @@
                     <div class="panel-heading"><strong>Company</strong></div>
                     <div class="panel-body">
                         <article>
+                            <img src="/site_images/imar_logo.png" alt="imar logo" class="pull-right"/>
                             <strong>IMaR Technology Gateway</strong><br><br>
                             The IMaR Gateway is an applied research provider delivering technology solutions for industry, which work for manufacturing, agriculture, and process sectors through electronic and mechanical hardware, software, IoT and data analytics innovation.<br><br>
                             These expertises are separated into two strands: Mechatronics (Hardware) and RFID/IoT/Analytic (Software)<br><br>
@@ -45,6 +46,7 @@
                     <div class="panel-heading"><strong>College</strong></div>
                     <div class="panel-body">
                         <article>
+                            <img src="/site_images/ittralee_logo.jpg" alt="ITTralee logo" class="pull-right"/>
                             <strong>Institute of Technology Tralee</strong><br><br>
                             The Institute of Technology Tralee (IT Tralee) was established in 1977 as the Regional Technical College, Tralee
                             and in 1992 became the Institute of Technology, Tralee. The Institute is located in two separate campus in Tralee co. Kerry: one on the north and the other on the south.<br> <br>
@@ -72,14 +74,14 @@
                 </div>
             </div>
         </div>
-<!--todo my blabla-->
         <div class="row">
             <div class="col-md-12">
                 <div class="panel panel-customize-blue">
                     <div class="panel-heading"><strong>My experience</strong></div>
                     <div class="panel-body">
                         <article>
-                            blabla
+                            This placement gave me a great work experience in Ireland, I got some competences in Laravel, but as well in Ajax, Jquery, Git, Linux, Gulp, Bower, Composer,...<br>
+                            This placement was a continuity of my professional project to become developer and later project manager.
                         </article>
                     </div>
                 </div>

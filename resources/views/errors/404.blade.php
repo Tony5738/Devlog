@@ -28,7 +28,7 @@
 
 @section("scripts")
 
-    <script>
+    <!--<script>
 //todo fix it
             var canvas = document.getElementById('mascotte-not-happy-canvas');
             var context1 = canvas.getContext('2d');
@@ -127,5 +127,5 @@
             context1.stroke();
 
 
-    </script>
+    </script>-->
 @endsection
